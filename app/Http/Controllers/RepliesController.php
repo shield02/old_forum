@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class RepliesController extends Controller
 {
+    /**
+     * RepliesController Constructor
+     */
     public function __construct()
     {
         $this->middleware('auth');
