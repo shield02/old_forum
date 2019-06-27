@@ -25,7 +25,7 @@
                         
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" name="title" class="form-control" id="title"
+                            <input type="text" name="title" id="title" class="form-control"
                                 value="{{ old('title') }}" required>
                         </div>
 
