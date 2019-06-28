@@ -33,21 +33,32 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li><a class="nav-link" href="{{ url('/threads') }}">{{ __('All Threads') }}</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('Browse') }}</a>
+
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/threads">{{ __('All Threads') }}</a></li>
+
+                                @if (auth()->check())
+                                    <li><a href="/threads?by={{ auth()->user()->name }}" class="dropdown-item">{{ __('My Threads') }}</a></li>
+                                @endif
+                            </ul>
+                        </li>
 
                         <li>
-                            <a class="nav-link" href="/threads/create">New Thread</a>
+                            <a class="nav-link" href="/threads/create">{{ __('New Thread') }}</a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Channels</a>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ __('Channels') }}</a>
 
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @foreach ($channels as $channel)
                                     <a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a>
                                 @endforeach
-                            </div>
+                            </ul>
                         </li>
 
                     </ul>
