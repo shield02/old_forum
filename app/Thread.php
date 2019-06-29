@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 
 class Thread extends Model
 {
@@ -12,7 +13,22 @@ class Thread extends Model
      * @var array
      */
     protected $guarded = [];
-    
+
+    /**
+     * The "booting" method of the model.
+     * A global scope is a query scope that is automatically applied to all the queries.
+     * 
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('replyCount', function ($builder) {
+            $builder->withCount('replies');
+        });
+    }
+
     /**
      * Get a string path for the thread.
      * 
@@ -40,7 +56,7 @@ class Thread extends Model
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function creator() 
+    public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
