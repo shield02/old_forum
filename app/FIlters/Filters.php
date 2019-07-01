@@ -50,7 +50,7 @@ abstract class Filters
 
     public function getFilters()
     {
-        $filters = array_intersect(array_keys($this->request->all()), $this->filters);
+        $filters = array_intersect(array_keys($this->request->only($this->filters)), $this->filters);
 
         return $this->request->only($filters);
     }
