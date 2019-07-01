@@ -35,6 +35,34 @@
 			"</div>"
 		],
 		"description": "Bootstrap Textarea Field"
+	},
+	"Bootstrap Feature Test": {
+		"prefix": "test",
+		"body": [
+			"\/** @test *\/",
+			"function it_()",
+			"{\n",
+			"}"
+		],
+		"description": "Bootstrap Feature Test Function"
+	},
+	"Bootstrap Public Function": {
+		"prefix": "pufn",
+		"body": [
+			"public function ()",
+			"{\n",
+			"}"
+		],
+		"description": "Bootstrap Public Function"
+	},
+	"Bootstrap Protected Function": {
+		"prefix": "ptfn",
+		"body": [
+			"protected function ()",
+			"{\n",
+			"}"
+		],
+		"description": "Bootstrap Protected Function"
 	}
 
 }
