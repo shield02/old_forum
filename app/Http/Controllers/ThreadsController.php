@@ -28,6 +28,10 @@ class ThreadsController extends Controller
     {
         $threads = $this->getThreads($channel, $filters);
 
+        if (request()->wantsJson()) {
+            return $threads;
+        }
+
         // $threads = Thread::latest()->filter($filters);
 
         // $threads = (new ThreadsQuery)->get();
@@ -139,8 +143,8 @@ class ThreadsController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
-        $threads = $threads->get();
+        // dd($threads->toSql());
         
-        return $threads;
+        return $threads->get();
     }
 }
