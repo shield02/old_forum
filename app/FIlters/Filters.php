@@ -26,18 +26,6 @@ abstract class Filters
 
         $this->builder = $builder;
 
-        // dd($this->getFilters());
-
-        // Just trying a fucntional approach
-        //
-        // collect($this->getFilters())
-        //     ->filter(fucntion ($value, $filter) {
-        //         return method_exists($this, $filter);
-        //     })
-        //     ->each(function ($value, $filter) {
-        //         $this->$filter($value);
-        //     });
-
         foreach ($this->getFilters() as $filter => $value) {
             if (method_exists($this, $filter)) {
                 $this->$filter($value);
