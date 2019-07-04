@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 
 class Thread extends Model
 {
@@ -14,8 +13,10 @@ class Thread extends Model
      */
     protected $guarded = [];
 
+    protected $with = ['creator', 'channel'];
+
     /**
-     * The "booting" method of the model.
+     * Boot the model.
      * A global scope is a query scope that is automatically applied to all the queries.
      * 
      * @return void
@@ -39,18 +40,6 @@ class Thread extends Model
         return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
-
-    /**
-     * A thread may have many replies.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function replies()
-    {
-        return $this->hasMany(Reply::class);
-    }
-
-
     /**
      * A thread belongs to a creator.
      * 
@@ -62,7 +51,7 @@ class Thread extends Model
     }
 
     /**
-     * A thread belongs to a channel.
+     * A thread is assigned to a channel.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -71,6 +60,15 @@ class Thread extends Model
         return $this->belongsTo(Channel::class);
     }
 
+    /**
+     * A thread may have many replies.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 
     /**
      * Add a reply to the thread.
@@ -82,6 +80,11 @@ class Thread extends Model
         $this->replies()->create($reply);
     }
 
+    /**
+     * Apply all relevant thread filters.
+     * 
+     * 
+     */
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
