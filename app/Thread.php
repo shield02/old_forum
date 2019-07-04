@@ -83,7 +83,7 @@ class Thread extends Model
     /**
      * Apply all relevant thread filters.
      * 
-     * 
+     * @return 
      */
     public function scopeFilter($query, $filters)
     {
