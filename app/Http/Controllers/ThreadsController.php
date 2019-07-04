@@ -32,22 +32,7 @@ class ThreadsController extends Controller
             return $threads;
         }
 
-        // $threads = Thread::latest()->filter($filters);
-
         // $threads = (new ThreadsQuery)->get();
-
-        // if ($channel->exists) {
-        //     $threads->where('channel_id', $channel->id);
-        // }
-
-        // if request('by'), we should filter by given username.
-        // if ($username = request('by')) {
-        //     $user = \App\User::where('name', $username)->firstOrFail();
-
-        //     $threads->where('user_id', $user->id);
-        // }
-
-        // $threads = $threads->get();
       
         return view('threads.index', compact('threads'));
     }
@@ -135,6 +120,13 @@ class ThreadsController extends Controller
         //
     }
 
+    /**
+     * Fetch all relevant threads.
+     * 
+     * @param Channel $channel
+     * @param ThreadFilters $filters
+     * @return mixed
+     */
     protected function getThreads($channel, $filters) 
     {
         $threads = Thread::latest()->filter($filters);
@@ -143,8 +135,6 @@ class ThreadsController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
-        // dd($threads->toSql());
-        
         return $threads->get();
     }
 }
