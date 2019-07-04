@@ -36,6 +36,13 @@
 		],
 		"description": "Bootstrap Textarea Field"
 	},
+	"Bootstrap button:submit": {
+		"prefix": "bssubmit",
+		"body": [
+			"<button type=\"submit\" class=\"btn btn-default\">Submit</button>",
+		],
+		"description": "Bootstrap Submit Button"
+	},
 	"Bootstrap Feature Test": {
 		"prefix": "test",
 		"body": [
