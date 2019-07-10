@@ -7,7 +7,7 @@ use App\Favoritable;
 
 class Reply extends Model
 {
-    use Favoritable;
+    use Favoritable, RecordsActivity;
 
     /**
      * Don't auto-apply mass assignment protection.

@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Filters\ThreadsFilters;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    use RecordsActivity;
+
     /**
      * Don't auto-apply mass assignment protection.
      * 
@@ -31,15 +34,6 @@ class Thread extends Model
 
         static::deleting(function ($thread) {
             $thread->replies()->delete();
-        });
-
-        static::created(function ($thread) {
-            Activity::create([
-                'user_id' => auth()->id(),
-                'type' => 'created_thread',
-                'subject_id' => $thread->id,
-                'subject_type' => 'App\Thread'
-            ]);
         });
     }
 
@@ -96,9 +90,10 @@ class Thread extends Model
     /**
      * Apply all relevant thread filters.
      * 
+     * @var App\Filters\ThreadFilters
      * @return 
      */
-    public function scopeFilter($query, $filters)
+    public function scopeFilter($query, ThreadsFilters $filters)
     {
         return $filters->apply($query);
     }
