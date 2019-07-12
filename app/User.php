@@ -47,9 +47,24 @@ class User extends Authenticatable
         return 'name'; //username
     }
 
+    /**
+     * Fetch all threads that were created by the user.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function threads()
     {
         return $this->hasMany(Thread::class)->latest();
+    }
+
+    /**
+     * Fetch all the activities created by the user.
+     * 
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
     }
 
 }
