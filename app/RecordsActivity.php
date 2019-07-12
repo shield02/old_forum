@@ -50,7 +50,7 @@ trait RecordsActivity
     /**
      * 
      * @param mixed $event
-     * @return void
+     * @return string
      */
     protected function getActivityType($event)
     {
