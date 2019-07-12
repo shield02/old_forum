@@ -11,7 +11,7 @@ class ActivityTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    function it_records_activities_when_a_thread_is_created()
+    function it_records_activity_when_a_thread_is_created()
     {
         $this->signIn();
 
@@ -30,7 +30,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    function it_records_activities_when_a_reply_is_created()
+    function it_records_activity_when_a_reply_is_created()
     {
         $this->signIn();
 
