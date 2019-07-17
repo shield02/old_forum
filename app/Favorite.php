@@ -18,6 +18,6 @@ class Favorite extends Model
 
     public function favorited()
     {
-        return $this->MorphTo();
+        return $this->morphTo();
     }
 }
