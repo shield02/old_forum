@@ -24,6 +24,8 @@
         .level { display: flex; align-items: center; }
         .flex { flex: 1; }
         .card { margin-bottom: 20px; }
+        .mr-1 { margin-right: 1em; }
+        [v-cloak] { display: none; }
     </style>
 </head>
 <body>
