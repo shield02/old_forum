@@ -29,10 +29,10 @@ class FavoritesController extends Controller
     }
 
     /**
-     * 
+     * Delete the favorite.
      * 
      * @param App\Reply $reply
-     * @return 
+     * @return void
      */
     public function destroy(Reply $reply)
     {
