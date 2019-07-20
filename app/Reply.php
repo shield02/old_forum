@@ -13,16 +13,23 @@ class Reply extends Model
     /**
      * Don't auto-apply mass assignment protection.
      * 
-     * @var array
+     * @var array $guarded
      */
     protected $guarded = [];
 
     /**
      * Earger load this relationship with owner.
      * 
-     * 
+     * @var array $with
      */
     protected $with = ['owner', 'favorites'];
+
+    /**
+     * Append any custom attributes.
+     * 
+     * @var array $appends
+     */
+    protected $appends = ['favoritesCount', 'isFavorited'];
     
     /**
      * A reply has an owner.
