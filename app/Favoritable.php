@@ -53,7 +53,7 @@ trait favoritable
     }
 
     /**
-     * Get the boolean value for a favorited reply.
+     * Fetch the favorite status as a property.
      * 
      * @return boolean
      */
