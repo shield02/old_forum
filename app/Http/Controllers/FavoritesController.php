@@ -31,7 +31,8 @@ class FavoritesController extends Controller
     /**
      * 
      * 
-     * @var void
+     * @param App\Reply $reply
+     * @return 
      */
     public function destroy(Reply $reply)
     {
