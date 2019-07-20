@@ -31,6 +31,18 @@ trait favoritable
     }
 
     /**
+     * Unfavorite the current reply.
+     * 
+     * @return void
+     */
+    public function unfavorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+
+        $this->favorites()->where($attributes)->delete();
+    }
+
+    /**
      * Determine if the current reply has been favorited.
      * 
      * @return boolean
@@ -40,6 +52,21 @@ trait favoritable
         return !! $this->favorites->where('user_id', auth()->id())->count();
     }
 
+    /**
+     * Get the boolean value for a favorited reply.
+     * 
+     * @return boolean
+     */
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+    }
+
+    /**
+     * Get the number of favorites for the reply.
+     * 
+     * @return integer
+     */
     public function getFavoritesCountAttribute()
     {
         return $this->favorites->count();
