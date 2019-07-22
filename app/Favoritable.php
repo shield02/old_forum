@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 trait favoritable
 {
+    protected static function bootFavoritable()
+    {
+        static::deleting(function ($model) {
+            $model->favorites->each->delete();
+        });
+    }
     /**
      * A reply can be favorited.
      * 
@@ -39,7 +45,7 @@ trait favoritable
     {
         $attributes = ['user_id' => auth()->id()];
 
-        $this->favorites()->where($attributes)->delete();
+        $this->favorites()->where($attributes)->get()->each->delete();
     }
 
     /**
