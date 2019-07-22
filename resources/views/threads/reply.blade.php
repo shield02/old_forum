@@ -7,9 +7,12 @@
                         {{ $reply->owner->name }}
                     </a> said {{ $reply->created_at->diffForHumans() }} ...
                 </h5>
-                <div>
-                    <favorite-component :reply="{{ $reply }}"></favorite-component>
-                </div>
+
+                @if (Auth::check())
+                    <div>
+                        <favorite-component :reply="{{ $reply }}"></favorite-component>
+                    </div>
+                @endif
             </div>
         </div>
         
