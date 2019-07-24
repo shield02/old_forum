@@ -1,43 +1,54 @@
 <template>
     <div>
-        <div v-for="(reply, index) in items" v-bind:key="index">
+        <div v-for="(reply, index) in items" v-bind:key="reply.id">
             <reply-component :data="reply" @deleted="remove(index)"></reply-component>
         </div>
 
-        <new-reply-component :endpoint="endpoint" @created="add"></new-reply-component>
+        <paginator-component :dataSet="dataSet" @changed="fetch"></paginator-component>
+
+        <new-reply-component @created="add"></new-reply-component>
     </div>
 </template>
 
 <script>
     import ReplyComponent from './ReplyComponent.vue';
     import NewReplyComponent from './NewReplyComponent.vue';
+    import collection from '../mixins/collection';
 
     export default {
-        props: ['data'],
-
         components: { ReplyComponent, NewReplyComponent },
 
+        mixins: [collection],
+
         data() {
-            return {
-                items: this.data,
-                endpoint: location.pathname + '/replies'
-            }
+            return { dataSet: false };
+        },
+
+        created() {
+            this.fetch();
         },
 
         methods: {
-            add(reply) {
-                this.items.push(reply);
-
-                this.$emit('added');
+            fetch(page) {
+                axios.get(this.url(page)).then(this.refresh);
             },
 
-            remove(index) {
-                this.items.splice(index, 1);
+            url(page) {
+                if (! page) {
+                    let query = location.search.match(/page=(\d+)/);
 
-                this.$emit('removed');
+                    page = query ? query[1] : 1;
+                }
 
-                flash('Your reply has been deleted.');
-            }
+                return `${location.pathname}/replies?page=${page}`;
+            },
+
+            refresh({data}) {
+                this.dataSet = data;
+                this.items = data.data;
+
+                window.scrollTo(0, 0);
+            },
         }
     }
 </script>
