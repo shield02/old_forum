@@ -81,10 +81,7 @@ class ThreadsController extends Controller
      */
     public function show($channel, Thread $thread)
     {
-        return view('threads.show', [
-          'thread'   => $thread,
-          'replies'  => $thread->replies()->paginate(20)
-        ]);
+        return view('threads.show', compact('thread'));
     }
 
     /**
@@ -136,7 +133,7 @@ class ThreadsController extends Controller
      * @param ThreadFilters $filters
      * @return mixed
      */
-    protected function getThreads($channel, $filters) 
+    protected function getThreads($channel, ThreadsFilters $filters) 
     {
         $threads = Thread::latest()->filter($filters);
 
