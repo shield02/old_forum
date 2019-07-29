@@ -18,7 +18,7 @@ class Reply extends Model
     protected $guarded = [];
 
     /**
-     * Earger load this relationship with owner.
+     * Earger load this relationships.
      * 
      * @var array $with
      */
