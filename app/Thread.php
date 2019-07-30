@@ -4,6 +4,7 @@ namespace App;
 
 use App\Filters\ThreadsFilters;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\ThreadWasUpdated;
 
 class Thread extends Model
 {
@@ -93,7 +94,17 @@ class Thread extends Model
      */
     public function addReply($reply)
     {
-        return $this->replies()->create($reply);
+        $reply = $this->replies()->create($reply);
+
+        // Prepare notifications for all subscribers.
+        $this->subscriptions
+            ->filter(function ($sub) use ($reply) {
+                return $sub->user_id != $reply->user_id;
+            })
+            // ->each->notify($reply); // Higher order collections approach
+            ->each(function ($sub) use ($reply) {
+                $sub->notify( $reply);
+            });
     }
 
     /**
@@ -108,13 +119,26 @@ class Thread extends Model
         return $filters->apply($query);
     }
 
+    /**
+     * Subscribe a user to the current thread.
+     * 
+     * @param int|null $userId
+     * @return $this
+     */
     public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()
         ]);
+
+        return $this;
     }
 
+    /**
+     * Unsubscribe a user from the current thread.
+     * 
+     * @param int|null $userId
+     */
     public function unsubscribe($userId = null)
     {
         $this->subscriptions()
@@ -122,6 +146,11 @@ class Thread extends Model
             ->delete();
     }
 
+    /**
+     * A thread has many subscriptions.
+     * 
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);
