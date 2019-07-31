@@ -101,10 +101,13 @@ class Thread extends Model
             ->filter(function ($sub) use ($reply) {
                 return $sub->user_id != $reply->user_id;
             })
-            // ->each->notify($reply); // Higher order collections approach
-            ->each(function ($sub) use ($reply) {
-                $sub->notify( $reply);
-            });
+            ->each->notify($reply); // Higher order collections approach
+            
+            // ->each(function ($sub) use ($reply) {
+            //     $sub->notify( $reply);
+            // });
+
+            return $reply;
     }
 
     /**
