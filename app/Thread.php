@@ -168,7 +168,7 @@ class Thread extends Model
     }
 
     /**
-     * 
+     * Determine if the current user is subscribed to the thread.
      * 
      * @return boolean
      */
@@ -177,5 +177,18 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists();
+    }
+
+    /**
+     * Determine if the current user has updated threads.
+     * 
+     * @param mixed $user
+     * @return bool
+     */
+    public function hasUpdatesFor($user)
+    {
+        $key = $user->visitedThreadCacheKey($this);
+
+        return $this->updated_at > cache($key);
     }
 }
