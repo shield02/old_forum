@@ -185,8 +185,10 @@ class Thread extends Model
      * @param mixed $user
      * @return bool
      */
-    public function hasUpdatesFor($user)
+    public function hasUpdatesFor($user = null)
     {
+        // $user = $user ?: auth()->user();
+
         $key = $user->visitedThreadCacheKey($this);
 
         return $this->updated_at > cache($key);
