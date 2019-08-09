@@ -58,6 +58,15 @@ class User extends Authenticatable
     }
 
     /**
+     * 
+     * 
+     */
+    public function lastReply()
+    {
+        return $this->hasOne(Reply::class)->latest();
+    }
+
+    /**
      * Fetch all the activities created by the user.
      * 
      * @return Illuminate\Database\Eloquent\Relations\HasMany
