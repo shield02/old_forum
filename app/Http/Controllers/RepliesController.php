@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Reply;
-use App\Inspections\Spam;
 use Illuminate\Http\Request;
+use App\Rules\SpamFree;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\CreatePostRequest;
 
 class RepliesController extends Controller
 {
@@ -34,25 +36,16 @@ class RepliesController extends Controller
      * Persist a new reply.
      *
      * @param integer $channelId
-     * @param  Thread  $thread
+     * @param Thread  $thread
+     * @param CreatePostRequest $form
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($channelId, Thread $thread)
+    public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
-        try {
-            $this->validateReply();
-    
-            $reply = $thread->addReply([
-                'body'      => request('body'),
-                'user_id'   => auth()->id()
-            ]);
-        } catch (\Exception $e) {
-            return response(
-                'Sorry, your reply could not be saved at this time.', 422
-            );
-        }
-        
-        return $reply->load('owner');
+        return $thread->addReply([
+            'body'      => request('body'),
+            'user_id'   => auth()->id()
+        ])->load('owner');
     }
 
     /**
@@ -66,7 +59,7 @@ class RepliesController extends Controller
         $this->authorize('update', $reply);
 
         try {
-            $this->validateReply();
+            request()->validate(['body' => ['required', new SpamFree]]);
             
             $reply->update(request(['body']));
         } catch (\Exception $e) {
@@ -94,11 +87,5 @@ class RepliesController extends Controller
         }
 
         return back();
-    }
-
-    protected function validateReply()
-    {
-        $this->validate(request(), ['body' => 'required']);
-        resolve(Spam::class)->detect(request('body'));
     }
 }
