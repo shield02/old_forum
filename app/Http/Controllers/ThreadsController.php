@@ -6,6 +6,7 @@ use App\Filters\ThreadsFilters;
 use App\Channel;
 use App\Thread;
 use Illuminate\Http\Request;
+use App\Rules\SpamFree;
 
 class ThreadsController extends Controller
 {
@@ -56,8 +57,8 @@ class ThreadsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
+            'title' => ['required', new SpamFree],
+            'body' => ['required', new SpamFree],
             'channel_id' => 'required|exists:channels,id'
         ]);
 
