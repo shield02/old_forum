@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Reply;
-use Illuminate\Http\Request;
 use App\Rules\SpamFree;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CreatePostRequest;
 
 class RepliesController extends Controller
