@@ -18,11 +18,10 @@ class RepliesController extends Controller
     }
 
     /**
-     * 
-     * 
+     * Fetch all relevant replies. 
      * 
      * @param mixed $channelId
-     * @param App\Thread $thread
+     * @param Thread $thread
      * @return mixed
      */
     public function index($channelId, Thread $thread)
@@ -33,8 +32,8 @@ class RepliesController extends Controller
     /**
      * Persist a new reply.
      *
-     * @param integer $channelId
-     * @param Thread  $thread
+     * @param integer           $channelId
+     * @param Thread            $thread
      * @param CreatePostRequest $form
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -47,7 +46,7 @@ class RepliesController extends Controller
     }
 
     /**
-     * 
+     * Update an existing reply.
      * 
      * @param Reply $reply
      * @return void
@@ -56,16 +55,9 @@ class RepliesController extends Controller
     {
         $this->authorize('update', $reply);
 
-        try {
-            request()->validate(['body' => ['required', new SpamFree]]);
+        $this->validate(request(), ['body' => ['required', new SpamFree]]);
             
-            $reply->update(request(['body']));
-        } catch (\Exception $e) {
-            return response(
-                'Sorry, your reply could not be saved at this time.', 422
-            );
-        }
-
+        $reply->update(request(['body']));
     }
 
     /**

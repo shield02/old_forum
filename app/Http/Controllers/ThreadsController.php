@@ -11,7 +11,7 @@ use App\Rules\SpamFree;
 class ThreadsController extends Controller
 {
     /**
-     * ThreadsController Constructor
+     * Create a ThreadsController Instance.
      */
     public function __construct()
     {
@@ -21,7 +21,7 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Channel $channel
+     * @param Channel       $channel
      * @param ThreadFilters $filters
      * @return \Illuminate\Http\Response
      */
@@ -56,7 +56,7 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'title' => ['required', new SpamFree],
             'body' => ['required', new SpamFree],
             'channel_id' => 'required|exists:channels,id'
