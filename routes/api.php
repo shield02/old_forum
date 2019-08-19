@@ -17,4 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users', 'Api\UsersController@index');
+
+// Route::get('/users', 'Api\UsersController@index');
+
+// Route::middleware(['auth'])->group(function() {
+//     Route::post('/users/{user}/avatar', 'Api\UserAvatarController@store')->name('avatar');
+// });
