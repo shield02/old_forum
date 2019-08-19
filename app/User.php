@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar_path'
     ];
 
     /**
@@ -77,7 +77,7 @@ class User extends Authenticatable
     }
 
     /**
-     * 
+     * Record that the user has read the given thread.
      * 
      * @param mixed $thread
      */
@@ -90,7 +90,17 @@ class User extends Authenticatable
     }
 
     /**
-     * Identifier cache key
+     * 
+     * 
+     * 
+     */
+    public function avatar()
+    {
+        return asset($this->avatar_path ?: 'images/avatars/default.png');
+    }
+
+    /**
+     * Get the cache key for when a user reads a thread.
      * 
      * @param mixed $thread
      * @return string
