@@ -90,13 +90,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Determine if the user has uploaded and avatar or not.
      * 
-     * 
-     * 
+     * @param mixed $avatar
+     * @return string
      */
-    public function avatar()
+    public function getAvatarPathAttribute($avatar)
     {
-        return asset($this->avatar_path ?: 'images/avatars/default.png');
+        return asset($avatar ?: 'images/avatars/default.png');
     }
 
     /**
