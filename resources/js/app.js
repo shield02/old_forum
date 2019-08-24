@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('flash-component', require('./components/FlashComponent.vue').default);
 Vue.component('paginator-component', require('./components/PaginatorComponent.vue').default);
 Vue.component('user-notifications-component', require('./components/UserNotificationsComponent.vue').default);
+Vue.component('avatar-form-component', require('./components/AvatarFormComponent.vue').default);
 
 Vue.component('thread-view-component', require('./pages/ThreadComponent.vue').default);
 
