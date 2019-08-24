@@ -5,9 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 col-md-offset-4">
                 <div class="page-header">
-                    <h1>
-                        {{ $profileUser->name }}
-                    </h1>
+                    <avatar-form-component :user="{{ $profileUser }}"></avatar-form-component>
                 </div>
             
                 @forelse ($activities as $date => $activity)
