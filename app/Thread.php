@@ -4,8 +4,6 @@ namespace App;
 
 use App\Filters\ThreadsFilters;
 use Illuminate\Database\Eloquent\Model;
-use App\Notifications\ThreadWasUpdated;
-use App\Events\ThreadHasNewReply;
 use App\Events\ThreadReceivedNewReply;
 
 class Thread extends Model
