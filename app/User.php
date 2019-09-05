@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar_path'
+        'name', 'email', 'password', 'avatar_path', 'confirmation_token'
     ];
 
     /**
@@ -35,6 +35,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'confirmed' => 'boolean'
     ];
 
     /**
@@ -66,7 +67,7 @@ class User extends Authenticatable
         return $this->hasOne(Reply::class)->latest();
     }
 
-    /**
+    /** 
      * Fetch all the activities created by the user.
      * 
      * @return Illuminate\Database\Eloquent\Relations\HasMany
@@ -74,6 +75,17 @@ class User extends Authenticatable
     public function activity()
     {
         return $this->hasMany(Activity::class);
+    }
+
+    /**
+     * Mark the user's account as confirmed.
+     */
+    public function confirm()
+    {
+        $this->confirmed = true;
+        $this->confirmation_token = null;
+
+        $this->save();
     }
 
     /**
