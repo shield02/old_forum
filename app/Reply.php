@@ -19,19 +19,22 @@ class Reply extends Model
     protected $guarded = [];
 
     /**
-     * Earger load this relationships.
+     * The relations to eager load on every query.
      * 
      * @var array $with
      */
     protected $with = ['owner', 'favorites'];
 
     /**
-     * Append any custom attributes.
+     * The accessors to append to model's array form.
      * 
      * @var array $appends
      */
-    protected $appends = ['favoritesCount', 'isFavorited'];
+    protected $appends = ['favoritesCount', 'isFavorited', 'isBest'];
 
+    /**
+     * Boot the reply instance.
+     */
     protected static function boot()
     {
         parent::boot();
@@ -99,12 +102,32 @@ class Reply extends Model
     }
 
     /**
-     * 
+     * Set the body attribute.
      * 
      * @param mixed $body
      */
     public function setBodyAttribute($body)
     {
         $this->attributes['body'] = preg_replace('/@([\w\-]+)/', '<a href="/profiles/$1">$0</a>', $body);
+    }
+
+    /**
+     * Determine if the current reply is marked as the best.
+     * 
+     * @return bool
+     */
+    public function isBest()
+    {
+        return $this->thread->best_reply_id == $this->id;
+    }
+
+    /**
+     * 
+     * 
+     * @return bool
+     */
+    public function getIsBestAttribute()
+    {
+        return $this->isBest();
     }
 }
