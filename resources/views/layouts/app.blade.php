@@ -35,6 +35,7 @@
         .flex { flex: 1; }
         .card { margin-bottom: 20px; }
         .mr-1 { margin-right: 1em; }
+        .ml-a { margin-left: auto; }
         [v-cloak] { display: none; }
     </style>
 
