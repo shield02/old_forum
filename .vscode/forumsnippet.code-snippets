@@ -47,8 +47,8 @@
 		"prefix": "test",
 		"body": [
 			"\/** @test *\/",
-			"function it_()",
-			"{\n",
+			"function it_$1()",
+			"{\n\t$0",
 			"}"
 		],
 		"description": "Bootstrap Feature Test Function"

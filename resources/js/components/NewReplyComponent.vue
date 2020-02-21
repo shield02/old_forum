@@ -2,16 +2,16 @@
     <div>
         <div v-if="signedIn">
             <div class="form-group">
-                <textarea name="body" 
-                            id="body" 
-                            class="form-control" 
-                            placeholder="Have something to say?" 
-                            rows="5" 
+                <textarea name="body"
+                            id="body"
+                            class="form-control"
+                            placeholder="Have something to say?"
+                            rows="5"
                             required
                             v-model="body"></textarea>
             </div>
 
-            <button type="submit" 
+            <button type="submit"
                     class="btn btn-light"
                     @click="addReply">Post</button>
         </div>
